@@ -1,4 +1,4 @@
-package com.playground.infra.security;
+package com.playground.global.security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.playground.global.config;
+package com.playground.global;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

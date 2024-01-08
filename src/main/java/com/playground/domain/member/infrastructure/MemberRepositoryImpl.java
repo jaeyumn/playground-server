@@ -5,6 +5,8 @@ import com.playground.domain.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Repository
 public class MemberRepositoryImpl implements MemberRepository {
@@ -19,5 +21,10 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public boolean isExistsMember(String username) {
         return memberJpaRepository.existsByUsername(username);
+    }
+
+    @Override
+    public Optional<Member> findByUsername(String username) {
+        return memberJpaRepository.findByUsername(username);
     }
 }

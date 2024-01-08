@@ -1,18 +1,22 @@
 package com.playground.domain.member.domain;
 
-import com.playground.global.config.BaseEntity;
+import com.playground.global.BaseEntity;
+import com.playground.global.exception.CustomApiException;
+import com.playground.global.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Member extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     @Column(unique = true)
     private String username;
     private String password;
@@ -23,5 +27,11 @@ public class Member extends BaseEntity {
         this.username = username;
         this.password = passwordEncoder.encode(password);
         this.name = name;
+    }
+
+    public void checkPassword(String targetPassword, PasswordEncoder passwordEncoder) {
+        if (!passwordEncoder.match(targetPassword, this.password)) {
+            throw new CustomApiException(ErrorCode.PASSWORD_MISMATCH);
+        }
     }
 }

@@ -1,6 +1,6 @@
 package com.playground.global.config;
 
-import com.playground.infra.security.Role;
+import com.playground.global.security.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,22 +19,26 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+
                 .headers(httpSecurityHeadersConfigurer ->
                         httpSecurityHeadersConfigurer
                                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
                         httpSecuritySessionManagementConfigurer
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("/**").permitAll()
+                                .requestMatchers("/members/sign-up").permitAll()
+                                .requestMatchers("/members/login").permitAll()
                                 .requestMatchers("/posts/**").hasRole(Role.MEMBER.getValue())
+                                .requestMatchers("/**").permitAll()
                 );
 
         return http.build();
     }
-
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

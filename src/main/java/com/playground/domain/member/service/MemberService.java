@@ -8,8 +8,10 @@ import com.playground.global.exception.CustomApiException;
 import com.playground.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class MemberService {
 
@@ -19,8 +21,9 @@ public class MemberService {
     /**
      * 회원 가입
      */
+    @Transactional
     public void signUp(SignUpRequestDto requestDto) {
-        String username = requestDto.username();
+        String username = requestDto.getUsername();
         if (memberRepository.isExistsMember(username)) {
             throw new CustomApiException(ErrorCode.IS_EXISTS_MEMBER);
         }
@@ -28,8 +31,8 @@ public class MemberService {
         memberRepository.save(
                 Member.builder()
                         .username(username)
-                        .password(requestDto.password())
-                        .name(requestDto.name())
+                        .password(requestDto.getPassword())
+                        .name(requestDto.getName())
                         .passwordEncoder(passwordEncoder)
                         .build()
         );
