@@ -1,6 +1,9 @@
 package com.playground.global.config;
 
+import com.playground.global.security.JwtAuthenticationFilter;
+import com.playground.global.security.JwtAuthenticationProvider;
 import com.playground.global.security.Role;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,15 +16,19 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Value("${cors.allowed-origins}")
     private List<String> allowedOrigins;
@@ -48,7 +55,9 @@ public class SecurityConfig {
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/members/**").hasRole(Role.MEMBER.name())
                                 .requestMatchers("/**").permitAll()
-                );
+                )
+
+                .addFilterBefore(new JwtAuthenticationFilter(jwtAuthenticationProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
