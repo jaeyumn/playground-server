@@ -1,5 +1,6 @@
 package com.playground.domain.member.infrastructure;
 
+import com.playground.domain.member.domain.Email;
 import com.playground.domain.member.domain.Member;
 import com.playground.domain.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,13 @@ public class MemberRepositoryImpl implements MemberRepository {
     private final EmailJpaRepository emailJpaRepository;
 
     @Override
-    public void save(Member member) {
+    public void saveMember(Member member) {
         memberJpaRepository.save(member);
+    }
+
+    @Override
+    public void saveEmail(Email email) {
+        emailJpaRepository.save(email);
     }
 
     @Override

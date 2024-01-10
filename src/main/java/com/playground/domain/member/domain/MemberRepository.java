@@ -4,7 +4,9 @@ import java.util.Optional;
 
 public interface MemberRepository {
 
-    void save(Member member);
+    void saveMember(Member member);
+
+    void saveEmail(Email email);
 
     boolean isExistsMember(String username);
 

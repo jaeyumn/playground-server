@@ -1,5 +1,6 @@
 package com.playground.domain.member.service;
 
+import com.playground.domain.member.domain.Email;
 import com.playground.domain.member.domain.Member;
 import com.playground.domain.member.domain.MemberRepository;
 import com.playground.domain.member.domain.PasswordEncoder;
@@ -31,12 +32,15 @@ public class MemberService {
         if (memberRepository.isExistsMember(username)) {
             throw new CustomApiException(ErrorCode.ALREADY_EXISTS_MEMBER);
         }
+        Email email = new Email(requestDto.getEmail());
+        memberRepository.saveEmail(email);
 
-        memberRepository.save(
+        memberRepository.saveMember(
                 Member.builder()
                         .username(username)
                         .password(requestDto.getPassword())
                         .name(requestDto.getName())
+                        .email(email)
                         .passwordEncoder(passwordEncoder)
                         .build()
         );

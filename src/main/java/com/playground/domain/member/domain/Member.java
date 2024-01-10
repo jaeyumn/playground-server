@@ -19,6 +19,7 @@ public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "member_id")
     private String id;
     @Column(unique = true)
     private String username;
@@ -30,11 +31,13 @@ public class Member extends BaseEntity {
     private Email email;
 
     @Builder
-    public Member(String username, String password, String name, String email, PasswordEncoder passwordEncoder) {
+    public Member(String username, String password, String name, Email email, PasswordEncoder passwordEncoder) {
         this.username = username;
         this.password = passwordEncoder.encode(password);
         this.name = name;
-        this.email = new Email(email, this);
+        this.email = email;
+
+        email.setMember(this);
     }
 
     public void checkPassword(String targetPassword, PasswordEncoder passwordEncoder) {
