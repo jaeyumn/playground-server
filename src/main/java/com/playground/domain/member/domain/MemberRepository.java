@@ -10,6 +10,9 @@ public interface MemberRepository {
 
     boolean isExistsEmail(String email);
 
+    Optional<Member> findById(String memberId);
+
     Optional<Member> findByUsername(String username);
 
+    void deleteMember(String memberId);
 }

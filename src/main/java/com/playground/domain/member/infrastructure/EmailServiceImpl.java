@@ -83,10 +83,18 @@ public class EmailServiceImpl implements EmailService {
      */
     @Override
     public void verifiedAuthCode(String email, String code) {
-        if (redisRepository.get(AUTH_CODE_PREFIX + email).equals(code)) {
+        if (!checkCorrectCode(email, code)) {
             throw new CustomApiException(ErrorCode.INCORRECT_EMAIL_CHECK_CODE);
         }
         redisRepository.remove(AUTH_CODE_PREFIX + email);
+    }
+
+    private boolean checkCorrectCode(String email, String code) {
+        try {
+            return redisRepository.get(AUTH_CODE_PREFIX + email).equals(code);
+        } catch (Exception e) {
+            throw new CustomApiException(ErrorCode.EMAIL_VERIFICATION_TIME_EXPIRE);
+        }
     }
 
 }

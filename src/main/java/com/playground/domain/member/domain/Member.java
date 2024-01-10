@@ -8,6 +8,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
+
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,5 +41,14 @@ public class Member extends BaseEntity {
         if (!passwordEncoder.match(targetPassword, this.password)) {
             throw new CustomApiException(ErrorCode.PASSWORD_MISMATCH);
         }
+    }
+
+    public void edit(String name, String password, PasswordEncoder passwordEncoder) {
+        this.name = Optional.ofNullable(name).orElse(this.name);
+        this.password = Optional.ofNullable(
+                        StringUtils.hasText(password)
+                                ? passwordEncoder.encode(password)
+                                : null)
+                .orElse(this.password);
     }
 }

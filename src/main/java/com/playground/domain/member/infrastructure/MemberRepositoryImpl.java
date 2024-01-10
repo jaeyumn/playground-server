@@ -30,7 +30,17 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
+    public Optional<Member> findById(String memberId) {
+        return memberJpaRepository.findById(memberId);
+    }
+
+    @Override
     public Optional<Member> findByUsername(String username) {
         return memberJpaRepository.findByUsername(username);
+    }
+
+    @Override
+    public void deleteMember(String memberId) {
+        memberJpaRepository.deleteById(memberId);
     }
 }
