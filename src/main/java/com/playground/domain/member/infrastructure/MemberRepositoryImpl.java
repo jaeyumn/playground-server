@@ -12,6 +12,7 @@ import java.util.Optional;
 public class MemberRepositoryImpl implements MemberRepository {
 
     private final MemberJpaRepository memberJpaRepository;
+    private final EmailJpaRepository emailJpaRepository;
 
     @Override
     public void save(Member member) {
@@ -21,6 +22,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public boolean isExistsMember(String username) {
         return memberJpaRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean isExistsEmail(String email) {
+        return emailJpaRepository.existsByEmail(email);
     }
 
     @Override

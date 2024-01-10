@@ -25,7 +25,7 @@ public class MemberService {
     public void signUp(SignUpRequestDto requestDto) {
         String username = requestDto.getUsername();
         if (memberRepository.isExistsMember(username)) {
-            throw new CustomApiException(ErrorCode.IS_EXISTS_MEMBER);
+            throw new CustomApiException(ErrorCode.ALREADY_EXISTS_MEMBER);
         }
 
         memberRepository.save(

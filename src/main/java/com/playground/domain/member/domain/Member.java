@@ -22,11 +22,16 @@ public class Member extends BaseEntity {
     private String password;
     private String name;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email_id")
+    private Email email;
+
     @Builder
-    public Member(String username, String password, String name, PasswordEncoder passwordEncoder) {
+    public Member(String username, String password, String name, String email, PasswordEncoder passwordEncoder) {
         this.username = username;
         this.password = passwordEncoder.encode(password);
         this.name = name;
+        this.email = new Email(email, this);
     }
 
     public void checkPassword(String targetPassword, PasswordEncoder passwordEncoder) {

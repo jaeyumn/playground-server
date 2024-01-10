@@ -16,8 +16,12 @@ public enum ErrorCode {
 
     // Member
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_001", "존재하지 않는 회원입니다."),
-    IS_EXISTS_MEMBER(HttpStatus.BAD_REQUEST, "MEMBER_002", "이미 존재하는 회원입니다."),
+    ALREADY_EXISTS_MEMBER(HttpStatus.BAD_REQUEST, "MEMBER_002", "이미 존재하는 회원입니다."),
     PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "MEMBER_003", "비밀번호가 일치하지 않습니다."),
+    ALREADY_EXISTS_EMAIL(HttpStatus.BAD_REQUEST, "MEMBER_004", "이미 존재하는 이메일입니다."),
+    UNABLE_TO_CREATE_EMAIL_CODE(HttpStatus.INTERNAL_SERVER_ERROR, "MEMBER_005", "인증 번호 생성에 실패했습니다."),
+    UNABLE_TO_SEND_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "MEMBER_006", "인증 번호 전송에 실패했습니다."),
+    INCORRECT_EMAIL_CHECK_CODE(HttpStatus.BAD_REQUEST, "MEMBER_007", "인증 번호가 일치하지 않습니다.")
     ;
 
     private final HttpStatus httpStatus;

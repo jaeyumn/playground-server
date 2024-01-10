@@ -8,5 +8,8 @@ public interface MemberRepository {
 
     boolean isExistsMember(String username);
 
+    boolean isExistsEmail(String email);
+
     Optional<Member> findByUsername(String username);
+
 }
