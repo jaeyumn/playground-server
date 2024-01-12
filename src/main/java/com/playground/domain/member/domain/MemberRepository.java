@@ -6,7 +6,7 @@ public interface MemberRepository {
 
     void saveMember(Member member);
 
-    void saveEmail(Email email);
+    void createEmail(Email email);
 
     boolean isExistsMember(String username);
 

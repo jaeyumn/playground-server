@@ -20,6 +20,10 @@ public class SignUpRequestDto {
     private String password;
 
     @NotBlank
+    @Size(max = 20)
+    private String nickname;
+
+    @NotBlank
     @Size(max = 20, message = "이름은 20자를 초과할 수 없습니다.")
     private String name;
 
@@ -30,9 +34,10 @@ public class SignUpRequestDto {
     private String email;
 
     @Builder
-    public SignUpRequestDto(String username, String password, String name, String email) {
+    public SignUpRequestDto(String username, String password, String nickname, String name, String email) {
         this.username = username;
         this.password = password;
+        this.nickname = nickname;
         this.name = name;
         this.email = email;
     }

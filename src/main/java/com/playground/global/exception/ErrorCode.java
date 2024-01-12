@@ -23,9 +23,14 @@ public enum ErrorCode {
     UNABLE_TO_SEND_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "MEMBER_006", "인증 번호 전송에 실패했습니다."),
     INCORRECT_EMAIL_CHECK_CODE(HttpStatus.BAD_REQUEST, "MEMBER_007", "인증 번호가 일치하지 않습니다."),
     EMAIL_VERIFICATION_TIME_EXPIRE(HttpStatus.BAD_REQUEST, "MEMBER_008", "인증 시간이 만료되었습니다."),
+
+    // Category
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "CATEGORY_001", "존재하지 않는 카테고리입니다."),
     ;
+
+    // Post
 
     private final HttpStatus httpStatus;
     private final String errorCode;
     private final String errorDescription;
-}
+    }

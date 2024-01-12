@@ -1,5 +1,6 @@
 package com.playground.domain.member.domain;
 
+import com.playground.domain.post.domain.Post;
 import com.playground.global.BaseEntity;
 import com.playground.global.exception.CustomApiException;
 import com.playground.global.exception.ErrorCode;
@@ -10,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -24,16 +27,21 @@ public class Member extends BaseEntity {
     @Column(unique = true)
     private String username;
     private String password;
+    private String nickname;
     private String name;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email_id")
     private Email email;
 
+    @OneToMany(mappedBy = "poster", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
+
     @Builder
-    public Member(String username, String password, String name, Email email, PasswordEncoder passwordEncoder) {
+    public Member(String username, String password, String nickname, String name, Email email, PasswordEncoder passwordEncoder) {
         this.username = username;
         this.password = passwordEncoder.encode(password);
+        this.nickname = nickname;
         this.name = name;
         this.email = email;
 
@@ -53,5 +61,9 @@ public class Member extends BaseEntity {
                                 ? passwordEncoder.encode(password)
                                 : null)
                 .orElse(this.password);
+    }
+
+    public void addPost(Post post) {
+        this.posts.add(post);
     }
 }

@@ -33,7 +33,7 @@ public class MemberService {
             throw new CustomApiException(ErrorCode.ALREADY_EXISTS_MEMBER);
         }
         Email email = new Email(requestDto.getEmail());
-        memberRepository.saveEmail(email);
+        memberRepository.createEmail(email);
 
         memberRepository.saveMember(
                 Member.builder()

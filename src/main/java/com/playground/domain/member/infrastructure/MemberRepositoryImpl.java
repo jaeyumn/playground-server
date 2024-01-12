@@ -21,7 +21,7 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public void saveEmail(Email email) {
+    public void createEmail(Email email) {
         emailJpaRepository.save(email);
     }
 
