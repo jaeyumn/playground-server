@@ -1,12 +1,16 @@
 package com.playground.domain.post.domain;
 
+import com.playground.global.exception.CustomApiException;
+import com.playground.global.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Category {
@@ -27,5 +31,12 @@ public class Category {
 
     public void addPost(Post post) {
         this.posts.add(post);
+    }
+
+    public Post getPost(Long postId) {
+        return this.posts.stream()
+                .filter(post -> post.getId().equals(postId))
+                .findFirst()
+                .orElseThrow(() -> new CustomApiException(ErrorCode.POST_NOT_FOUND));
     }
 }

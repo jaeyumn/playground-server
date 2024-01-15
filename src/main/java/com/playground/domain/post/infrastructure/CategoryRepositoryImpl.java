@@ -5,6 +5,7 @@ import com.playground.domain.post.domain.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -21,5 +22,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public Optional<Category> findCategoryById(Long id) {
         return categoryJpaRepository.findById(id);
+    }
+
+    @Override
+    public List<Category> findAllCategories() {
+        return categoryJpaRepository.findAll();
     }
 }
