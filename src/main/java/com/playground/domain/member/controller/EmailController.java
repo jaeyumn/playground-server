@@ -21,6 +21,6 @@ public class EmailController {
 
     @PostMapping("/emails/verification/check")
     public void verificationEmail(@RequestBody VerificationEmailCodeRequestDto requestDto) {
-        emailService.verifiedAuthCode(requestDto.email(), requestDto.email());
+        emailService.verifiedAuthCode(requestDto.email(), requestDto.code());
     }
 }

@@ -38,4 +38,4 @@ out/
 ### VS Code ###
 .vscode/
 
-local/postgres/db/
+local/mysql/db/

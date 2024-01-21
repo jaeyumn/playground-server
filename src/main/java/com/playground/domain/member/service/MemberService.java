@@ -64,7 +64,12 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new CustomApiException(ErrorCode.MEMBER_NOT_FOUND));
 
-        return new FindMemberResponseDto(member.getUsername(), member.getName(), member.getEmail().getEmail());
+        return new FindMemberResponseDto(
+                member.getUsername(),
+                member.getNickname(),
+                member.getName(),
+                member.getEmail().getEmail()
+        );
     }
 
     /**
